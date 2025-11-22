@@ -1,0 +1,32 @@
+import sys
+import os
+
+# Add the project root directory to sys.path so we can import from src
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import pytest
+from src.ngram_model import TrigramModel
+
+def test_fit_and_generate():
+    model = TrigramModel()
+    text = "I am a test sentence. This is another test sentence."
+    model.fit(text)
+    generated_text = model.generate()
+    assert isinstance(generated_text, str)
+    assert len(generated_text.split()) > 0
+
+def test_empty_text():
+    model = TrigramModel()
+    text = ""
+    model.fit(text)
+    generated_text = model.generate()
+    assert generated_text == ""
+
+def test_short_text():
+    model = TrigramModel()
+    text = "I am."
+    model.fit(text)
+    generated_text = model.generate()
+    assert isinstance(generated_text, str)
+
+
